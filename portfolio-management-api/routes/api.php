@@ -21,8 +21,9 @@ Route::middleware(['auth:sanctum', 'json.accepts'])->group(function (): void {
     Route::get('/projects/{project}', [ProjectController::class, 'show']);
     Route::put('/projects/update/{project}', [ProjectController::class, 'update']);
     Route::delete('/projects/delete/{project}', [ProjectController::class, 'destroy']);
-    Route::apiResource('skills', SkillController::class)->except(['create', 'edit', 'show']);
-    Route::apiResource('experiences', ExperienceController::class)->except(['create', 'edit', 'show']);
+    Route::get('/skills', [SkillController::class, 'index']);
+    Route::get('/experiences', [ExperienceController::class, 'index']);
+
     Route::get('/public/portfolio', [PublicPortfolioController::class, 'index']);
     
     Route::get('/test', function () {

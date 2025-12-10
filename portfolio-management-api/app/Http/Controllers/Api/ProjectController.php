@@ -12,14 +12,34 @@ use Illuminate\Http\JsonResponse;
 class ProjectController extends Controller
 {
     public function index(): JsonResponse
-    {
-        $projects = auth()->user()
-            ->projects()
-            ->latest()
-            ->get();
+{
+    $query = auth()->user()
+        ->projects()
+        ->latest();
 
-        return response()->json(ProjectResource::collection($projects));
+    
+    if (request()->filled('search')) {
+        $search = request()->search;
+
+        $query->where(function($q) use ($search) {
+            $q->where('title', 'like', "%{$search}%")
+              ->orWhere('description', 'like', "%{$search}%");
+        });
     }
+
+    if (request()->filled('category')) {
+        $query->where('category', request()->category);
+    }
+
+    if (request()->filled('status')) {
+        $query->where('status', request()->status);
+    }
+
+    $projects = $query->get();
+
+    return response()->json(ProjectResource::collection($projects));
+}
+
 
     public function store(ProjectRequest $request): JsonResponse
     {
