@@ -13,7 +13,7 @@ class SkillController extends Controller
     {
         $skills = auth()->user()
             ->skills()
-            ->orderBy('name')
+            ->orderByDesc('proficiency')->orderBy('name')
             ->get();
 
         return response()->json(SkillResource::collection($skills));
