@@ -23,7 +23,7 @@ class PublicPortfolioController extends Controller
         }
 
         return response()->json([
-            'profile' => new AdminResource($admin),
+            'admin' => new AdminResource($admin),
             'projects' => ProjectResource::collection(
                 $admin->projects()->published()->latest()->get()
             ),
