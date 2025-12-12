@@ -8,13 +8,14 @@ use App\Http\Resources\ProjectResource;
 use App\Models\Admin;
 use App\Models\Project;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Auth;
 
 class ProjectController extends Controller
 {
     public function index(): JsonResponse
 {
-    /** @var Admin $user */
-    $user = auth()->user();
+    /** @var Admin|null $user */
+    $user = Auth::user();
     $query = $user
         ->projects()
         ->latest();
@@ -90,8 +91,8 @@ class ProjectController extends Controller
 
     private function authorizeOwner(Project $project): void
     {
-        /** @var Admin $user */
-        $user = auth()->user();
+        /** @var Admin|null $user */
+        $user = Auth::user();
         abort_unless(
             $project->admin_id === $user->id,
             403,

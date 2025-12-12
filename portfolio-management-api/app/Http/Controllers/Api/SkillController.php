@@ -8,14 +8,15 @@ use App\Http\Resources\SkillResource;
 use App\Models\Admin;
 use App\Models\Skill;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Auth;
 
 class SkillController extends Controller
 {
     
     public function index(): JsonResponse
     {
-        /** @var Admin $user */
-        $user = auth()->user();
+        /** @var Admin|null $user */
+        $user = Auth::user();
         $skills = $user
             ->skills()
             ->orderByDesc('proficiency')->orderBy('name')
@@ -26,8 +27,8 @@ class SkillController extends Controller
 
     public function store(SkillRequest $request): JsonResponse
     {
-        /** @var Admin $user */
-        $user = auth()->user();
+        /** @var Admin|null $user */
+        $user = Auth::user();
         $skill = $user->skills()->create($request->validated());
         return response()->json(new SkillResource($skill), 201);
     }
@@ -48,8 +49,8 @@ class SkillController extends Controller
 
     private function authorize(Skill $skill): void
     {
-        /** @var Admin $user */
-        $user = auth()->user();
+        /** @var Admin|null $user */
+        $user = Auth::user();
         abort_unless(
             $skill->admin_id === $user->id,
             403,

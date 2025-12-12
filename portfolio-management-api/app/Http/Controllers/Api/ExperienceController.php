@@ -8,14 +8,15 @@ use App\Http\Resources\ExperienceResource;
 use App\Models\Admin;
 use App\Models\Experience;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Auth;
 
 class ExperienceController extends Controller
 {
     
     public function index(): JsonResponse
     {
-        /** @var Admin $user */
-        $user = auth()->user();
+        /** @var Admin|null $user */
+        $user = Auth::user();
         $experiences = $user
             ->experiences()
             ->orderBy('id', 'asc')
@@ -26,8 +27,8 @@ class ExperienceController extends Controller
 
     public function store(ExperienceRequest $request): JsonResponse
     {
-        /** @var Admin $user */
-        $user = auth()->user();
+        /** @var Admin|null $user */
+        $user = Auth::user();
         $experience = $user->experiences()->create($request->validated());
         return response()->json(new ExperienceResource($experience), 201);
     }
@@ -48,8 +49,8 @@ class ExperienceController extends Controller
 
     private function authorize(Experience $experience): void
     {
-        /** @var Admin $user */
-        $user = auth()->user();
+        /** @var Admin|null $user */
+        $user = Auth::user();
         abort_unless(
             $experience->admin_id === $user->id,
             403,
