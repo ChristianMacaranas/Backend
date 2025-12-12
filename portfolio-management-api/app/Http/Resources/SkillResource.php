@@ -14,6 +14,7 @@ class SkillResource extends JsonResource
             'name' => $this->name,
             'proficiency' => $this->proficiency,
             'created_at' => optional($this->created_at)->toIso8601String(),
+            'updated_at' => optional($this->updated_at)->toIso8601String(),
         ];
     }
 }
