@@ -13,7 +13,7 @@ class SkillRequest extends FormRequest
 
     public function rules(): array
     {
-        $required = $this->isMethod('post') ? 'required' : 'sometimes|required';
+        $required = $this->isMethod('post') ? 'required' : 'sometimes';
 
         return [
             'name' => [$required, 'string', 'max:255'],

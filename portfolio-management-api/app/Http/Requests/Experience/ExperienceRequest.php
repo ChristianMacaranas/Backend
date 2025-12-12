@@ -13,7 +13,7 @@ class ExperienceRequest extends FormRequest
 
     public function rules(): array
     {
-        $required = $this->isMethod('post') ? 'required' : 'sometimes|required';
+        $required = $this->isMethod('post') ? 'required' : 'sometimes';
 
         return [
             'role' => [$required, 'string', 'max:255'],

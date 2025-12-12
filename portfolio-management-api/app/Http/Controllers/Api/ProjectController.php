@@ -13,7 +13,9 @@ class ProjectController extends Controller
 {
     public function index(): JsonResponse
 {
-    $query = auth()->user()
+    /** @var Admin $user */
+    $user = auth()->user();
+    $query = $user
         ->projects()
         ->latest();
 
@@ -69,7 +71,7 @@ class ProjectController extends Controller
         $this->authorizeOwner($project);
         $project->delete();
 
-        return response()->json(['message' => 'Project deleted successfully.']);
+        return response()->json(null, 204);
     }
 
     private function buildPayloadFromRequest(ProjectRequest $request): array
@@ -88,8 +90,10 @@ class ProjectController extends Controller
 
     private function authorizeOwner(Project $project): void
     {
+        /** @var Admin $user */
+        $user = auth()->user();
         abort_unless(
-            $project->admin_id === auth()->id(),
+            $project->admin_id === $user->id,
             403,
             'You are not allowed to modify this project.'
         );

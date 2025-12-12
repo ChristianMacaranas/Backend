@@ -7,7 +7,7 @@ All API responses are JSON.
 Base URL examples:
 
 - **Local**: `http://localhost:8000/api`
-- **Production**: `<YOUR_API_BASE_URL>/api`
+- **Production**: `/api`
 
 ---
 

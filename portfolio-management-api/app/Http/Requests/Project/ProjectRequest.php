@@ -13,7 +13,7 @@ class ProjectRequest extends FormRequest
 
     public function rules(): array
     {
-        $required = $this->isMethod('post') ? 'required' : 'sometimes|required';
+        $required = $this->isMethod('post') ? 'required' : 'sometimes';
 
         return [
             'title' => [$required, 'string', 'max:255'],
