@@ -8,6 +8,10 @@ use App\Http\Controllers\Api\PublicPortfolioController;
 use App\Http\Controllers\Api\SkillController;
 use Illuminate\Support\Facades\Route;
 
+Route::get('/test', function() {
+    return response()->json(['message' => 'Backend connected!']);
+});
+
 Route::prefix('auth')->group(function () {
     Route::middleware('json.accepts')->post('login', [AuthController::class, 'login']);
     Route::middleware(['auth:sanctum', 'json.accepts'])->post('/logout', [AuthController::class, 'logout']);
@@ -25,6 +29,7 @@ Route::middleware(['auth:sanctum', 'json.accepts'])->group(function (): void {
 
     Route::get('/experiences', [ExperienceController::class, 'index']);
     Route::get('/skills', [SkillController::class, 'index']);
+    
    // Route::apiResource('skills', SkillController::class)->except(['create', 'edit', 'show']);
    // Route::apiResource('experiences', ExperienceController::class)->except(['create', 'edit', 'show']);
 });
