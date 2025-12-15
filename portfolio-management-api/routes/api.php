@@ -19,7 +19,9 @@ Route::prefix('auth')->group(function () {
 
 Route::middleware('json.accepts')->get('/public/portfolio', [PublicPortfolioController::class, 'index']);
 Route::middleware(['auth:sanctum', 'json.accepts'])->group(function (): void {
+    //  Profile routes: update (existing) and show (read-only)
     //Route::post('/profile/update', [ProfileController::class, 'update']);
+    Route::get('/profile', [ProfileController::class, 'show']);
 
     Route::get('/projects', [ProjectController::class, 'index']);
     Route::post('/projects/create', [ProjectController::class, 'store']);
@@ -29,7 +31,6 @@ Route::middleware(['auth:sanctum', 'json.accepts'])->group(function (): void {
 
     Route::get('/experiences', [ExperienceController::class, 'index']);
     Route::get('/skills', [SkillController::class, 'index']);
-    
-   // Route::apiResource('skills', SkillController::class)->except(['create', 'edit', 'show']);
+  // Route::apiResource('skills', SkillController::class)->except(['create', 'edit', 'show']);
    // Route::apiResource('experiences', ExperienceController::class)->except(['create', 'edit', 'show']);
 });
