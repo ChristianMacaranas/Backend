@@ -9,7 +9,7 @@ use App\Http\Controllers\Api\SkillController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/test', function() {
-    return response()->json(['message' => 'Backend connected!']);
+    return response()->json(['message' => 'Pweeedeeeee!']);
 });
 
 Route::prefix('auth')->group(function () {
